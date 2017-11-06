@@ -1,0 +1,2 @@
+# DBInterfaceOrientationManager
+App横竖屏旋转一句话管理
