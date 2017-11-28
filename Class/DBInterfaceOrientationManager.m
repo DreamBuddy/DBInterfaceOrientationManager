@@ -83,11 +83,11 @@ static inline void DBExchangedInstanceMethod(SEL originalSelector, SEL swizzledS
 + (void)load{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        DBExchangedInstanceMethod(@selector(application:supportedInterfaceOrientationsForWindow:), @selector(icq_application:supportedInterfaceOrientationsForWindow:), self.class);
+        DBExchangedInstanceMethod(@selector(application:supportedInterfaceOrientationsForWindow:), @selector(db_application:supportedInterfaceOrientationsForWindow:), self.class);
     });
 }
 
-- (UIInterfaceOrientationMask)icq_application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
+- (UIInterfaceOrientationMask)db_application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
     if ([DBInterfaceOrientationManager sharedInstance].allowRotation) {
         return UIInterfaceOrientationMaskAllButUpsideDown;
     }
@@ -96,43 +96,43 @@ static inline void DBExchangedInstanceMethod(SEL originalSelector, SEL swizzledS
 
 @end
 
-@implementation UITabBarController (iCQInterfaceOrientation)
+@implementation UITabBarController (DBInterfaceOrientation)
 
 + (void)load{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        DBExchangedInstanceMethod(@selector(supportedInterfaceOrientations), @selector(icq_supportedInterfaceOrientations), self.class);
-        DBExchangedInstanceMethod(@selector(shouldAutorotate), @selector(icq_shouldAutorotate), self.class);
+        DBExchangedInstanceMethod(@selector(supportedInterfaceOrientations), @selector(db_supportedInterfaceOrientations), self.class);
+        DBExchangedInstanceMethod(@selector(shouldAutorotate), @selector(db_shouldAutorotate), self.class);
     });
 }
 
 #pragma mark - 支持旋转屏幕
-- (UIInterfaceOrientationMask)icq_supportedInterfaceOrientations{
+- (UIInterfaceOrientationMask)db_supportedInterfaceOrientations{
     return [self.selectedViewController supportedInterfaceOrientations];
 }
 
-- (BOOL)icq_shouldAutorotate{
+- (BOOL)db_shouldAutorotate{
     return [DBInterfaceOrientationManager sharedInstance].allowRotation;
 }
 
 @end
 
-@implementation UINavigationController (iCQInterfaceOrientation)
+@implementation UINavigationController (DBInterfaceOrientation)
 
 + (void)load{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        DBExchangedInstanceMethod(@selector(supportedInterfaceOrientations), @selector(icq_supportedInterfaceOrientations), self.class);
-        DBExchangedInstanceMethod(@selector(shouldAutorotate), @selector(icq_shouldAutorotate), self.class);
+        DBExchangedInstanceMethod(@selector(supportedInterfaceOrientations), @selector(db_supportedInterfaceOrientations), self.class);
+        DBExchangedInstanceMethod(@selector(shouldAutorotate), @selector(db_shouldAutorotate), self.class);
     });
 }
 
 #pragma mark - 支持旋转屏幕
-- (UIInterfaceOrientationMask)icq_supportedInterfaceOrientations{
+- (UIInterfaceOrientationMask)db_supportedInterfaceOrientations{
     return [self.topViewController supportedInterfaceOrientations];
 }
 
-- (BOOL)icq_shouldAutorotate{
+- (BOOL)db_shouldAutorotate{
     return [DBInterfaceOrientationManager sharedInstance].allowRotation;
 }
 
